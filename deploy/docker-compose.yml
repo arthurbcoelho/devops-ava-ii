@@ -36,9 +36,25 @@ services:
     restart: unless-stopped
     networks:
       - devops-network
+      - frontend-network
+
+  frontend:
+    build:
+      context: ../front
+      dockerfile: Dockerfile
+    container_name: frontend-devops-ava-ii
+    ports:
+      - "3001:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - frontend-network
 
 networks:
   devops-network:
+    driver: bridge
+  frontend-network:
     driver: bridge
 
 volumes:
