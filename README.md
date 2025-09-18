@@ -226,6 +226,63 @@ npm run start:dev
 
 A API estará disponível em `http://localhost:3000`
 
+## 🐳 Executar com Docker Compose
+
+Para executar a aplicação completa (API, Frontend e Banco de dados) usando Docker Compose:
+
+### Pré-requisitos
+- Docker
+- Docker Compose
+
+### Executar todos os serviços
+```bash
+cd deploy
+docker-compose up -d
+```
+
+### Verificar status dos containers
+```bash
+docker-compose ps
+```
+
+### Ver logs dos serviços
+```bash
+# Logs de todos os serviços
+docker-compose logs -f
+
+# Logs de um serviço específico
+docker-compose logs -f api
+docker-compose logs -f postgres
+docker-compose logs -f frontend
+```
+
+### Parar os serviços
+```bash
+docker-compose down
+```
+
+### Parar e remover volumes (dados do banco)
+```bash
+docker-compose down -v
+```
+
+### Reconstruir e executar (após mudanças no código)
+```bash
+docker-compose up --build -d
+```
+
+### URLs dos serviços:
+- **API**: http://localhost:3000
+- **Frontend**: http://localhost:3001
+- **PostgreSQL**: localhost:5432
+
+### Configurações do Banco no Docker:
+- **Host**: postgres (dentro do container) / localhost (fora do container)
+- **Port**: 5432
+- **Username**: postgres
+- **Password**: ava2
+- **Database**: produtos_db
+
 ## 📚 Tecnologias Utilizadas
 
 - **Backend**: NestJS, TypeORM, PostgreSQL
