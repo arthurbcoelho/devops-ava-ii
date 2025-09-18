@@ -17,7 +17,7 @@ export class ProdutoService {
       const produto = this.produtoRepository.create(createProdutoDto);
       return await this.produtoRepository.save(produto);
     } catch (error) {
-      if (error.code === '23505') { // Postgres unique violation error code
+      if (error.code === '23505') {
         throw new ConflictException('SKU já existe');
       }
       throw error;
@@ -61,7 +61,7 @@ export class ProdutoService {
       Object.assign(produto, updateProdutoDto);
       return await this.produtoRepository.save(produto);
     } catch (error) {
-      if (error.code === '23505') { // Postgres unique violation error code
+      if (error.code === '23505') {
         throw new ConflictException('SKU já existe');
       }
       throw error;
@@ -77,7 +77,6 @@ export class ProdutoService {
     const produto = await this.findOne(id);
     
     try {
-      // Replace all fields (except id and timestamps)
       produto.sku = createProdutoDto.sku;
       produto.name = createProdutoDto.name;
       produto.price = createProdutoDto.price;
@@ -85,7 +84,7 @@ export class ProdutoService {
       
       return await this.produtoRepository.save(produto);
     } catch (error) {
-      if (error.code === '23505') { // Postgres unique violation error code
+      if (error.code === '23505') {
         throw new ConflictException('SKU já existe');
       }
       throw error;
