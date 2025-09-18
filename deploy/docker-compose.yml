@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-devops-ava-ii
+    environment:
+      POSTGRES_PASSWORD: ava2
+      POSTGRES_USER: postgres
+      POSTGRES_DB: produtos_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - devops-ava-ii:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - devops-network
+
+  api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    container_name: api-devops-ava-ii
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=ava2
+      - DB_DATABASE=produtos_db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - devops-network
+
+networks:
+  devops-network:
+    driver: bridge
+
+volumes:
+  devops-ava-ii:
